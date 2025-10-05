@@ -50,7 +50,6 @@ int main(int argc, char *argv[])
 
                 process::SetHook(pid, lw_info);
             }
-            // qDebug() << "pb_select";
         });
     }
     pb_select->show();
@@ -65,11 +64,46 @@ int main(int argc, char *argv[])
         {
             lw->clear();
             lw->addItems(process::GetAllProcess());
-            // qDebug() << "pb_update"; 
         });
     }
     pb_update->show();
+
+
+    QPushButton *pb_clear = new QPushButton(mw);
+    {
+        pb_clear->setText("clear");
+        pb_clear->setGeometry(200, 200, 75, 25);
+        
+        QObject::connect(pb_clear, QPushButton::clicked, [lw_info]()
+        {
+            lw_info->clear();
+        });
+    }
+    pb_clear->show();
     
+
+    QCheckBox *cb_time = new QCheckBox(mw);
+    {
+        cb_time->setText("print time");
+        cb_time->setGeometry(0, 225, 75, 25);
+    }
+    cb_time->show();
+
+
+    QCheckBox *cb_save = new QCheckBox(mw);
+    {
+        cb_save->setText("auto save");
+        cb_save->setGeometry(0, 250, 75, 25);
+    }
+    cb_save->show();
+
+
+    QCheckBox *cb_topmost = new QCheckBox(mw);
+    {
+        cb_topmost->setText("top most");
+        cb_topmost->setGeometry(0, 275, 75, 25);
+    }
+    cb_topmost->show();
 
     return app.exec();
 }

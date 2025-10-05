@@ -13,6 +13,7 @@
 #include <QStringList>
 #include <QWidget>
 #include <QLabel>
+#include <QCheckBox>
 
 #include <QDebug>
 
