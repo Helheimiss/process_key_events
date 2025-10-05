@@ -47,12 +47,12 @@ int main(int argc, char *argv[])
     cb_save->show();
 
 
-    QCheckBox *cb_topmost = new QCheckBox(mw);
-    {
-        cb_topmost->setText("top most");
-        cb_topmost->setGeometry(0, 275, 75, 25);
-    }
-    cb_topmost->show();
+    // QCheckBox *cb_topmost = new QCheckBox(mw);
+    // {
+    //     cb_topmost->setText("top most");
+    //     cb_topmost->setGeometry(0, 275, 75, 25);
+    // }
+    // cb_topmost->show();
 
 
     QPushButton *pb_select = new QPushButton(mw);

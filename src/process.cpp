@@ -44,6 +44,7 @@ LRESULT CALLBACK process::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
     QCheckBox *cbs = static_cast<QCheckBox *>(cb_save);
     
     time_t rawtime;
+    std::ofstream fl(__FILE_NAME__, std::ios::app);
 
     if (nCode >= 0 && wParam == WM_KEYDOWN) {
         DWORD foregroundPID;
@@ -61,6 +62,7 @@ LRESULT CALLBACK process::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
                 {
                     time(&rawtime);
                     qstr.append(" ").append(ctime(&rawtime));
+                    qstr.back() = ' ';
                     lwi->addItem(qstr);
                 }
                 else
@@ -68,10 +70,17 @@ LRESULT CALLBACK process::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
                     lwi->addItem(qstr);
                 }
 
+                if (cbs && cbs->isChecked() && fl.is_open())
+                {
+                    fl << qstr.toStdString() << std::endl;
+                }
+
                 lwi->scrollToBottom();
             }
         }
     }
+
+    fl.close();
     return CallNextHookEx(keyboardHook, nCode, wParam, lParam);
 }
 
