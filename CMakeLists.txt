@@ -10,7 +10,6 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 add_executable(process_key_events WIN32 
     ${PROJECT_SOURCE_DIR}/src/main.cpp
     ${PROJECT_SOURCE_DIR}/src/process.cpp
-    ${PROJECT_SOURCE_DIR}/src/load_save.cpp
 )
 
 target_include_directories(process_key_events PRIVATE
