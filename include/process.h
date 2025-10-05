@@ -18,7 +18,7 @@ public:
 
     static QStringList GetAllProcess();
 
-    static void SetHook(DWORD pid, void *lwi);
+    static void SetHook(DWORD pid, void *lwi, void *cbt, void *cbs);
     static void RemoveKeyboardHook();
 };
 

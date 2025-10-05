@@ -31,13 +31,36 @@ int main(int argc, char *argv[])
     lw_info->show();
 
 
+    QCheckBox *cb_time = new QCheckBox(mw);
+    {
+        cb_time->setText("print time");
+        cb_time->setGeometry(0, 225, 75, 25);
+    }
+    cb_time->show();
+
+
+    QCheckBox *cb_save = new QCheckBox(mw);
+    {
+        cb_save->setText("auto save");
+        cb_save->setGeometry(0, 250, 75, 25);
+    }
+    cb_save->show();
+
+
+    QCheckBox *cb_topmost = new QCheckBox(mw);
+    {
+        cb_topmost->setText("top most");
+        cb_topmost->setGeometry(0, 275, 75, 25);
+    }
+    cb_topmost->show();
+
 
     QPushButton *pb_select = new QPushButton(mw);
     {
         pb_select->setText("select");
         pb_select->setGeometry(0, 200, 75, 25);
         
-        QObject::connect(pb_select, QPushButton::clicked, [lw, lw_info]()
+        QObject::connect(pb_select, QPushButton::clicked, [lw, lw_info, cb_time, cb_save]()
         {
             process::RemoveKeyboardHook();
 
@@ -48,7 +71,7 @@ int main(int argc, char *argv[])
 
                 int pid = std::stoi(res.c_str()+begin);
 
-                process::SetHook(pid, lw_info);
+                process::SetHook(pid, lw_info, cb_time, cb_save);
             }
         });
     }
@@ -81,29 +104,6 @@ int main(int argc, char *argv[])
     }
     pb_clear->show();
     
-
-    QCheckBox *cb_time = new QCheckBox(mw);
-    {
-        cb_time->setText("print time");
-        cb_time->setGeometry(0, 225, 75, 25);
-    }
-    cb_time->show();
-
-
-    QCheckBox *cb_save = new QCheckBox(mw);
-    {
-        cb_save->setText("auto save");
-        cb_save->setGeometry(0, 250, 75, 25);
-    }
-    cb_save->show();
-
-
-    QCheckBox *cb_topmost = new QCheckBox(mw);
-    {
-        cb_topmost->setText("top most");
-        cb_topmost->setGeometry(0, 275, 75, 25);
-    }
-    cb_topmost->show();
 
     return app.exec();
 }
