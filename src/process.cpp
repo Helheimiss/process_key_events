@@ -1,5 +1,6 @@
 #include "process.h"
 
+#include <fstream>
 
 QStringList process::GetAllProcess()
 {
@@ -32,11 +33,15 @@ QStringList process::GetAllProcess()
 DWORD process::targetPID = 0;
 HHOOK process::keyboardHook = nullptr;
 void *process::lw_info = nullptr;
+void *process::cb_time = nullptr;
+void *process::cb_save = nullptr;
 
 
 LRESULT CALLBACK process::KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
     QListWidget *lwi = static_cast<QListWidget *>(lw_info);
+    QCheckBox *cbt = static_cast<QCheckBox *>(cb_time);
+    QCheckBox *cbs = static_cast<QCheckBox *>(cb_save);
 
     if (nCode >= 0 && wParam == WM_KEYDOWN) {
         DWORD foregroundPID;

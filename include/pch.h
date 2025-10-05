@@ -1,10 +1,11 @@
 #pragma once
 
-#include <stdexcept>
-#include <string>
-
 #include <windows.h>
 #include <tlhelp32.h>
+
+#include <stdexcept>
+#include <string>
+#include <ctime>
 
 #include <QApplication>
 #include <QPushButton>
@@ -18,3 +19,6 @@
 #include <QDebug>
 
 #include <Qstring>
+
+
+#define __FILE_NAME__ "log.txt"
